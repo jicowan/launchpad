@@ -1,3 +1,4 @@
-template-file-path: LaunchpadStack.template.json
-parameters: {}
-tags: {}
+template-file-path: ./LaunchpadStack.template.json
+
+parameters: 
+tags:
