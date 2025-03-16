@@ -5,6 +5,7 @@ from aws_cdk import (
     aws_ec2 as ec2,
 )
 from constructs import Construct
+from aws_cdk import Duration
 from aws_cdk.lambda_layer_kubectl_v31 import KubectlV31Layer
 import boto3
 from typing import List
@@ -177,7 +178,8 @@ class LaunchpadStack(Stack):
             default_capacity=0,
             vpc=vpc,
             vpc_subnets=[ec2.SubnetSelection(subnet_type=ec2.SubnetType.PRIVATE_WITH_EGRESS)],
-            endpoint_access=eks.EndpointAccess.PUBLIC_AND_PRIVATE
+            endpoint_access=eks.EndpointAccess.PUBLIC_AND_PRIVATE,
+            authentication_mode=eks.AuthenticationMode.API_AND_CONFIG_MAP
         )
 
         # Add managed node groups based on parameters
@@ -198,6 +200,8 @@ class LaunchpadStack(Stack):
                 repository="https://nvidia.github.io/k8s-device-plugin",
                 namespace="nvidia-device-plugin",
                 create_namespace=True,
+                wait=True,
+                timeout=Duration.minutes(10),
                 version="0.17.1"
             )
 
@@ -208,6 +212,9 @@ class LaunchpadStack(Stack):
                 chart="aws-neuron-device-plugin",
                 repository="https://aws.github.io/eks-charts",
                 namespace="kube-system", 
+                create_namespace=False,
+                wait=True,
+                timeout=Duration.minutes(10),
                 values={
                     "npd": {
                         "enabled": "false"

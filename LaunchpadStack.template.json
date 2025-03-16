@@ -1084,7 +1084,9 @@
       "endpointPublicAccess": true,
       "endpointPrivateAccess": true
      },
-     "accessConfig": {}
+     "accessConfig": {
+      "authenticationMode": "API_AND_CONFIG_MAP"
+     }
     },
     "AssumeRoleArn": {
      "Fn::GetAtt": [
@@ -1426,6 +1428,8 @@
     "Release": "dstackinferenceclusterchartnvidiadeviceplugin3c1f3e3b",
     "Chart": "nvidia-device-plugin",
     "Version": "0.17.1",
+    "Wait": true,
+    "Timeout": "600s",
     "Namespace": "nvidia-device-plugin",
     "Repository": "https://nvidia.github.io/k8s-device-plugin",
     "CreateNamespace": true
@@ -1672,7 +1676,7 @@
   "CDKMetadata": {
    "Type": "AWS::CDK::Metadata",
    "Properties": {
-    "Analytics": "v2:deflate64:H4sIAAAAAAAA/+1YWW/iSBD+LenHUeMZwgqN8rSON8qgSQiChIdFCBXdBfTSblt9kDAW/33UPjCTTDI5liy72gfL7jq6vjra5fJxkDU/N4PmEdyaBuPLhhTTIBtYYEsKt2aSITsOsmHKRhmJ4S78ZsgJ+UAoMW6q0EaJmom502BFosjJKCMKYvxB5HqdekJPixVYJJQwwfUlmGUutaFPqLipFOyBxngzptFMDXsRLTcd5FqjjMAKhISpkMKu/0xUtesqZR1ePvu9TmXCluU6hrSw00mv1AU4xRbkZAbSICUiXbWje/JgjJirTrpqh5xrNOZKRRpL/0uHDgPG4SA5EBhF3RTF4p/6ibN4DVOJNb2mhcYkTOQbbIVpAelvrzer3QFE900ociCcd8Geg8VbWJOTEflAxgcD8DBQPBqmvDbPOj1/q7l+1VEWtcJd0rAXlavQWmCLGJWlA2ROC7s+14lLR5l3rMTF0TAt0hpHcRB25TfUtCZgDFoThP5GTSs4dWyJ9hQMjsZUQjzlEEQzdQFr1EPUxh8NXJogi6QzFrU3WpCreBb0bv2Cr0Gt0vIcmbxv/LRZbMaULN0UmZW50VIVFU8ToWzIGBqzdXIGTtoIUmDCruu0c95NOM69lzXTB90zY1GaDC+OJ3ef25P2b0XAhEY+EN8q3FyY5c5SwhSl2VbJ3Q4rFmpnZSoXH/OQEgtC5UEYb8avAjw57938Y6AzgrMZMktOSPdqMoi+nP1xc3FGKFniuso0SIfb3v0yFz8dtyovu2c3/avuv8jRMd06Ocqqs1C9Kl5ZeEIZC4qhVzb7LUb6HMzPrb13w/3SND3t5avK72B9zV/725qk4a0JnV3Qr26aNxg0l6DEDI2lX1DG0QK03VABcZD1E4n+e8cYFyM/XXt4qRaKiRRkyFjilK2boIvRK4Rsp/ORGBTMkfcSKZjAAv4ubR1qtZMU4Pw66VUmCgmvU3LzttdRUijc8rafG08yOb/ctfoMHG+V3zH9lEvvGNtXm6rduI9+f+l6sbH/kMpcg89I3hm3IXlr9t67/vdbi/97sx/5cTH1SqQFq/o6y0/rdeI5Dw7xQzLnAwsW/YBifij6h+R9779Hch6rIkybDe2jSZxmWJ3a+9eYRs7YJP6V3GNXkZlS+d5ePZ2sBEfthzaaD3IDC3Oh5l4nShQX1Q+N/B/fhn4KWke/lz//PhYzXkP6WatRDl6NVasZfC2eh61mPoeV8e+t7SJRH1tBsxm0j/4yQjS0U1bEGPSL+3doMtsuXxQAAA=="
+    "Analytics": "v2:deflate64:H4sIAAAAAAAA/+1YW2/iOBT+LfXjyGSGskKjPk2a6XbQtDSClodFCB3sA3hxnMgXWibiv6+cCzDtttvL0mVX+xAlPhf7O8efc3JyHOTNz82geQS3psH4oiHFJMj7FtiCwq0Z58iOg3yQsWFOErgLfxhyQj4QSoybKLRRqqZi5jRYkSpyMsyJggR/MrleZV4Qa7EEi4QSJri+BLMorNb0CRc3kYI98BitRzSaqkEc0WrSfuE1zAksQUiYCCns6rdU1bMuM9bh1bOf61SmbFGNE8jKdTrZlboAp9icnExBGqREZMt2dM8ejBEz1cmW7ZBzjcZcqUhjFX8V0GHAOBwkBwKj5E1JFv/US53Fa5hI3Mq3stCYlIligo0xLSH97Xyz2h1Adt+EogDCeRfsOVi8hRU5GZIPZHQwAA8DxaNpKrh51on9bav1o46yqBXuigZxVI1Ca4HNE1SW9pE5LezqXKcuG+Y+sAoXR8O0yLY4yoOwa7+mpjUGY9CaIPQ3alrBqWMLtKdgcDiiEpIJhyCaqgtYoR6gNv5o4MIEeSSdsaj9oqW4zmcp725f8FtQy6w6R6aoG39aLNYjShZugszKYtE6z87OUVnBitReptz7hHFnHHa/jqOr7q+d8/FlGBNKUPEsFcqGjKExm3RMwUkbQQZM2NWWIJx3U44zn4+t0m+PVyaiAhdeHI/vPrfH7V/K1AqNvC9+1BFyYRY7QwkTlGbDp7sdVSLUzsjUyXgsF5RYEKpI12g9ehXg8Xl884+BzglOp8gsOSHdq3E/+nb29ebijFCywFXNCZAON1X+ZSF+Om7VUXbPbnpX3X9RoCO6CXKY16emJvsriSeUsaAYemezXzLS52B+LvfeDfdLt+npKF9Fv4ONtSgQG07S8NaEzs7pdzcpShGaS1BiisbSbyiTaA7arqmAJMh7qUT/ZWSMS5Cfrjy8TAvFRAYyZCx1ym7LpUvQO4Rsp0aSBBTMkMepFExgCX9Xtgq12tkU4Pw6jeslSgvvU2mLAtlRUijc6DYfJk8qOb/cXfUZON5qv7P0UyG9Y25fvdQ2jPvo97ddL17sP+Qy0+B3pKiMm5S8dffem//75eL/0ezHflT2xxJpqaq/zorTep16zYND/FDMed+CRd/KmJ9I/1C87/n3KC5yVaZpvaY9NKnTDOtTe/8a0cgZmyZ/ZffYVe5M5XxvrlinS8FR+/aOFi1f38JMqJn3iVLFRf3ro/gbuKafgtbRl+o34ceyG2xI35U1qhatsWw1g+/l86DVLDq2Kv/xys5T9bEVNJtB++h3I0RDO2VFgkGvvP8Bc4QFwYkUAAA="
    },
    "Metadata": {
     "aws:cdk:path": "LaunchpadStack/CDKMetadata/Default"
