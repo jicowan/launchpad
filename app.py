@@ -1,28 +1,22 @@
 #!/usr/bin/env python3
 import os
-
+import json
 import aws_cdk as cdk
 
 from launchpad.launchpad_stack import LaunchpadStack
 
 
 app = cdk.App()
-LaunchpadStack(app, "LaunchpadStack",
-    # If you don't specify 'env', this stack will be environment-agnostic.
-    # Account/Region-dependent features and context lookups will not work,
-    # but a single synthesized template can be deployed anywhere.
 
-    # Uncomment the next line to specialize this stack for the AWS Account
-    # and Region that are implied by the current CLI configuration.
+params_file = app.node.try_get_context('params_file') or 'cluster_parameters.json'
+if not os.path.exists(params_file):
+    raise ValueError(f"Parameters file {params_file} does not exist")
 
-    #env=cdk.Environment(account=os.getenv('CDK_DEFAULT_ACCOUNT'), region=os.getenv('CDK_DEFAULT_REGION')),
+# Load parameters from JSON file
+with open('cluster_parameters.json', 'r') as f:
+    cluster_parameters = json.load(f)
 
-    # Uncomment the next line if you know exactly what Account and Region you
-    # want to deploy the stack to. */
+LaunchpadStack(app, "LaunchpadStack", cluster_parameters=cluster_parameters)
 
-    #env=cdk.Environment(account='123456789012', region='us-east-1'),
-
-    # For more information, see https://docs.aws.amazon.com/cdk/latest/guide/environments.html
-    )
 
 app.synth()

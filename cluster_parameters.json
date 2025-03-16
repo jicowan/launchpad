@@ -1,0 +1,58 @@
+{
+    "cluster_name": "ai-inference-cluster",
+    "kubernetes_version": "1.28",
+    "vpc_config": {
+        "number_of_azs": 2,
+        "subnet_cidr_masks": {
+            "public": 24,
+            "private": 23
+        }
+    },
+    "node_groups": [
+        {
+            "name": "system-workloads",
+            "instance_type": "m5.xlarge",
+            "min_size": 1,
+            "max_size": 3,
+            "desired_size": 1,
+            "disk_size": 100,
+            "labels": {
+                "workload": "system"
+            }
+        },
+        {
+            "name": "nvidia-inference",
+            "instance_type": "g5.xlarge",
+            "min_size": 1,
+            "max_size": 5,
+            "desired_size": 1,
+            "disk_size": 200,
+            "labels": {
+                "workload": "inference",
+                "accelerator": "nvidia"
+            },
+            "taints": [{
+                "key": "nvidia.com/gpu",
+                "value": "true",
+                "effect": "NO_SCHEDULE"
+            }]
+        },
+        {
+            "name": "inferentia-inference",
+            "instance_type": "inf2.xlarge",
+            "min_size": 1,
+            "max_size": 5,
+            "desired_size": 1,
+            "disk_size": 200,
+            "labels": {
+                "workload": "inference",
+                "accelerator": "inferentia"
+            },
+            "taints": [{
+                "key": "aws.amazon.com/neuron",
+                "value": "true",
+                "effect": "NO_SCHEDULE"
+            }]
+        }
+    ]
+}
