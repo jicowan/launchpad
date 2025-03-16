@@ -1,0 +1,1991 @@
+{
+ "Resources": {
+  "InferenceVPC31404BF4": {
+   "Type": "AWS::EC2::VPC",
+   "Properties": {
+    "CidrBlock": "10.0.0.0/16",
+    "EnableDnsHostnames": true,
+    "EnableDnsSupport": true,
+    "InstanceTenancy": "default",
+    "Tags": [
+     {
+      "Key": "Name",
+      "Value": "LaunchpadStack/InferenceVPC"
+     }
+    ]
+   },
+   "Metadata": {
+    "aws:cdk:path": "LaunchpadStack/InferenceVPC/Resource"
+   }
+  },
+  "InferenceVPCPrivateSubnet1Subnet8D7390AF": {
+   "Type": "AWS::EC2::Subnet",
+   "Properties": {
+    "AvailabilityZone": {
+     "Fn::Select": [
+      0,
+      {
+       "Fn::GetAZs": ""
+      }
+     ]
+    },
+    "CidrBlock": "10.0.0.0/23",
+    "MapPublicIpOnLaunch": false,
+    "Tags": [
+     {
+      "Key": "aws-cdk:subnet-name",
+      "Value": "Private"
+     },
+     {
+      "Key": "aws-cdk:subnet-type",
+      "Value": "Private"
+     },
+     {
+      "Key": "kubernetes.io/role/internal-elb",
+      "Value": "1"
+     },
+     {
+      "Key": "Name",
+      "Value": "LaunchpadStack/InferenceVPC/PrivateSubnet1"
+     }
+    ],
+    "VpcId": {
+     "Ref": "InferenceVPC31404BF4"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "LaunchpadStack/InferenceVPC/PrivateSubnet1/Subnet"
+   }
+  },
+  "InferenceVPCPrivateSubnet1RouteTableB4DCD676": {
+   "Type": "AWS::EC2::RouteTable",
+   "Properties": {
+    "Tags": [
+     {
+      "Key": "kubernetes.io/role/internal-elb",
+      "Value": "1"
+     },
+     {
+      "Key": "Name",
+      "Value": "LaunchpadStack/InferenceVPC/PrivateSubnet1"
+     }
+    ],
+    "VpcId": {
+     "Ref": "InferenceVPC31404BF4"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "LaunchpadStack/InferenceVPC/PrivateSubnet1/RouteTable"
+   }
+  },
+  "InferenceVPCPrivateSubnet1RouteTableAssociation5BC1A07E": {
+   "Type": "AWS::EC2::SubnetRouteTableAssociation",
+   "Properties": {
+    "RouteTableId": {
+     "Ref": "InferenceVPCPrivateSubnet1RouteTableB4DCD676"
+    },
+    "SubnetId": {
+     "Ref": "InferenceVPCPrivateSubnet1Subnet8D7390AF"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "LaunchpadStack/InferenceVPC/PrivateSubnet1/RouteTableAssociation"
+   }
+  },
+  "InferenceVPCPrivateSubnet1DefaultRouteA2D9AD0E": {
+   "Type": "AWS::EC2::Route",
+   "Properties": {
+    "DestinationCidrBlock": "0.0.0.0/0",
+    "NatGatewayId": {
+     "Ref": "InferenceVPCPublicSubnet1NATGatewayF56DF247"
+    },
+    "RouteTableId": {
+     "Ref": "InferenceVPCPrivateSubnet1RouteTableB4DCD676"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "LaunchpadStack/InferenceVPC/PrivateSubnet1/DefaultRoute"
+   }
+  },
+  "InferenceVPCPrivateSubnet2Subnet93817F76": {
+   "Type": "AWS::EC2::Subnet",
+   "Properties": {
+    "AvailabilityZone": {
+     "Fn::Select": [
+      1,
+      {
+       "Fn::GetAZs": ""
+      }
+     ]
+    },
+    "CidrBlock": "10.0.2.0/23",
+    "MapPublicIpOnLaunch": false,
+    "Tags": [
+     {
+      "Key": "aws-cdk:subnet-name",
+      "Value": "Private"
+     },
+     {
+      "Key": "aws-cdk:subnet-type",
+      "Value": "Private"
+     },
+     {
+      "Key": "kubernetes.io/role/internal-elb",
+      "Value": "1"
+     },
+     {
+      "Key": "Name",
+      "Value": "LaunchpadStack/InferenceVPC/PrivateSubnet2"
+     }
+    ],
+    "VpcId": {
+     "Ref": "InferenceVPC31404BF4"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "LaunchpadStack/InferenceVPC/PrivateSubnet2/Subnet"
+   }
+  },
+  "InferenceVPCPrivateSubnet2RouteTable90ABD566": {
+   "Type": "AWS::EC2::RouteTable",
+   "Properties": {
+    "Tags": [
+     {
+      "Key": "kubernetes.io/role/internal-elb",
+      "Value": "1"
+     },
+     {
+      "Key": "Name",
+      "Value": "LaunchpadStack/InferenceVPC/PrivateSubnet2"
+     }
+    ],
+    "VpcId": {
+     "Ref": "InferenceVPC31404BF4"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "LaunchpadStack/InferenceVPC/PrivateSubnet2/RouteTable"
+   }
+  },
+  "InferenceVPCPrivateSubnet2RouteTableAssociation62D3AF36": {
+   "Type": "AWS::EC2::SubnetRouteTableAssociation",
+   "Properties": {
+    "RouteTableId": {
+     "Ref": "InferenceVPCPrivateSubnet2RouteTable90ABD566"
+    },
+    "SubnetId": {
+     "Ref": "InferenceVPCPrivateSubnet2Subnet93817F76"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "LaunchpadStack/InferenceVPC/PrivateSubnet2/RouteTableAssociation"
+   }
+  },
+  "InferenceVPCPrivateSubnet2DefaultRoute7EE8BE6A": {
+   "Type": "AWS::EC2::Route",
+   "Properties": {
+    "DestinationCidrBlock": "0.0.0.0/0",
+    "NatGatewayId": {
+     "Ref": "InferenceVPCPublicSubnet2NATGateway1AED3E61"
+    },
+    "RouteTableId": {
+     "Ref": "InferenceVPCPrivateSubnet2RouteTable90ABD566"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "LaunchpadStack/InferenceVPC/PrivateSubnet2/DefaultRoute"
+   }
+  },
+  "InferenceVPCPublicSubnet1SubnetE777C748": {
+   "Type": "AWS::EC2::Subnet",
+   "Properties": {
+    "AvailabilityZone": {
+     "Fn::Select": [
+      0,
+      {
+       "Fn::GetAZs": ""
+      }
+     ]
+    },
+    "CidrBlock": "10.0.4.0/24",
+    "MapPublicIpOnLaunch": true,
+    "Tags": [
+     {
+      "Key": "aws-cdk:subnet-name",
+      "Value": "Public"
+     },
+     {
+      "Key": "aws-cdk:subnet-type",
+      "Value": "Public"
+     },
+     {
+      "Key": "kubernetes.io/role/elb",
+      "Value": "1"
+     },
+     {
+      "Key": "Name",
+      "Value": "LaunchpadStack/InferenceVPC/PublicSubnet1"
+     }
+    ],
+    "VpcId": {
+     "Ref": "InferenceVPC31404BF4"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "LaunchpadStack/InferenceVPC/PublicSubnet1/Subnet"
+   }
+  },
+  "InferenceVPCPublicSubnet1RouteTable2B0355BA": {
+   "Type": "AWS::EC2::RouteTable",
+   "Properties": {
+    "Tags": [
+     {
+      "Key": "kubernetes.io/role/elb",
+      "Value": "1"
+     },
+     {
+      "Key": "Name",
+      "Value": "LaunchpadStack/InferenceVPC/PublicSubnet1"
+     }
+    ],
+    "VpcId": {
+     "Ref": "InferenceVPC31404BF4"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "LaunchpadStack/InferenceVPC/PublicSubnet1/RouteTable"
+   }
+  },
+  "InferenceVPCPublicSubnet1RouteTableAssociation707D6A58": {
+   "Type": "AWS::EC2::SubnetRouteTableAssociation",
+   "Properties": {
+    "RouteTableId": {
+     "Ref": "InferenceVPCPublicSubnet1RouteTable2B0355BA"
+    },
+    "SubnetId": {
+     "Ref": "InferenceVPCPublicSubnet1SubnetE777C748"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "LaunchpadStack/InferenceVPC/PublicSubnet1/RouteTableAssociation"
+   }
+  },
+  "InferenceVPCPublicSubnet1DefaultRouteB84340B3": {
+   "Type": "AWS::EC2::Route",
+   "Properties": {
+    "DestinationCidrBlock": "0.0.0.0/0",
+    "GatewayId": {
+     "Ref": "InferenceVPCIGWB487A726"
+    },
+    "RouteTableId": {
+     "Ref": "InferenceVPCPublicSubnet1RouteTable2B0355BA"
+    }
+   },
+   "DependsOn": [
+    "InferenceVPCVPCGW41712A4E"
+   ],
+   "Metadata": {
+    "aws:cdk:path": "LaunchpadStack/InferenceVPC/PublicSubnet1/DefaultRoute"
+   }
+  },
+  "InferenceVPCPublicSubnet1EIPCB367FE6": {
+   "Type": "AWS::EC2::EIP",
+   "Properties": {
+    "Domain": "vpc",
+    "Tags": [
+     {
+      "Key": "kubernetes.io/role/elb",
+      "Value": "1"
+     },
+     {
+      "Key": "Name",
+      "Value": "LaunchpadStack/InferenceVPC/PublicSubnet1"
+     }
+    ]
+   },
+   "Metadata": {
+    "aws:cdk:path": "LaunchpadStack/InferenceVPC/PublicSubnet1/EIP"
+   }
+  },
+  "InferenceVPCPublicSubnet1NATGatewayF56DF247": {
+   "Type": "AWS::EC2::NatGateway",
+   "Properties": {
+    "AllocationId": {
+     "Fn::GetAtt": [
+      "InferenceVPCPublicSubnet1EIPCB367FE6",
+      "AllocationId"
+     ]
+    },
+    "SubnetId": {
+     "Ref": "InferenceVPCPublicSubnet1SubnetE777C748"
+    },
+    "Tags": [
+     {
+      "Key": "kubernetes.io/role/elb",
+      "Value": "1"
+     },
+     {
+      "Key": "Name",
+      "Value": "LaunchpadStack/InferenceVPC/PublicSubnet1"
+     }
+    ]
+   },
+   "DependsOn": [
+    "InferenceVPCPublicSubnet1DefaultRouteB84340B3",
+    "InferenceVPCPublicSubnet1RouteTableAssociation707D6A58"
+   ],
+   "Metadata": {
+    "aws:cdk:path": "LaunchpadStack/InferenceVPC/PublicSubnet1/NATGateway"
+   }
+  },
+  "InferenceVPCPublicSubnet2Subnet81AA912A": {
+   "Type": "AWS::EC2::Subnet",
+   "Properties": {
+    "AvailabilityZone": {
+     "Fn::Select": [
+      1,
+      {
+       "Fn::GetAZs": ""
+      }
+     ]
+    },
+    "CidrBlock": "10.0.5.0/24",
+    "MapPublicIpOnLaunch": true,
+    "Tags": [
+     {
+      "Key": "aws-cdk:subnet-name",
+      "Value": "Public"
+     },
+     {
+      "Key": "aws-cdk:subnet-type",
+      "Value": "Public"
+     },
+     {
+      "Key": "kubernetes.io/role/elb",
+      "Value": "1"
+     },
+     {
+      "Key": "Name",
+      "Value": "LaunchpadStack/InferenceVPC/PublicSubnet2"
+     }
+    ],
+    "VpcId": {
+     "Ref": "InferenceVPC31404BF4"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "LaunchpadStack/InferenceVPC/PublicSubnet2/Subnet"
+   }
+  },
+  "InferenceVPCPublicSubnet2RouteTable0674BF63": {
+   "Type": "AWS::EC2::RouteTable",
+   "Properties": {
+    "Tags": [
+     {
+      "Key": "kubernetes.io/role/elb",
+      "Value": "1"
+     },
+     {
+      "Key": "Name",
+      "Value": "LaunchpadStack/InferenceVPC/PublicSubnet2"
+     }
+    ],
+    "VpcId": {
+     "Ref": "InferenceVPC31404BF4"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "LaunchpadStack/InferenceVPC/PublicSubnet2/RouteTable"
+   }
+  },
+  "InferenceVPCPublicSubnet2RouteTableAssociation4A331AB6": {
+   "Type": "AWS::EC2::SubnetRouteTableAssociation",
+   "Properties": {
+    "RouteTableId": {
+     "Ref": "InferenceVPCPublicSubnet2RouteTable0674BF63"
+    },
+    "SubnetId": {
+     "Ref": "InferenceVPCPublicSubnet2Subnet81AA912A"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "LaunchpadStack/InferenceVPC/PublicSubnet2/RouteTableAssociation"
+   }
+  },
+  "InferenceVPCPublicSubnet2DefaultRoute626F2C0B": {
+   "Type": "AWS::EC2::Route",
+   "Properties": {
+    "DestinationCidrBlock": "0.0.0.0/0",
+    "GatewayId": {
+     "Ref": "InferenceVPCIGWB487A726"
+    },
+    "RouteTableId": {
+     "Ref": "InferenceVPCPublicSubnet2RouteTable0674BF63"
+    }
+   },
+   "DependsOn": [
+    "InferenceVPCVPCGW41712A4E"
+   ],
+   "Metadata": {
+    "aws:cdk:path": "LaunchpadStack/InferenceVPC/PublicSubnet2/DefaultRoute"
+   }
+  },
+  "InferenceVPCPublicSubnet2EIPAF4726F9": {
+   "Type": "AWS::EC2::EIP",
+   "Properties": {
+    "Domain": "vpc",
+    "Tags": [
+     {
+      "Key": "kubernetes.io/role/elb",
+      "Value": "1"
+     },
+     {
+      "Key": "Name",
+      "Value": "LaunchpadStack/InferenceVPC/PublicSubnet2"
+     }
+    ]
+   },
+   "Metadata": {
+    "aws:cdk:path": "LaunchpadStack/InferenceVPC/PublicSubnet2/EIP"
+   }
+  },
+  "InferenceVPCPublicSubnet2NATGateway1AED3E61": {
+   "Type": "AWS::EC2::NatGateway",
+   "Properties": {
+    "AllocationId": {
+     "Fn::GetAtt": [
+      "InferenceVPCPublicSubnet2EIPAF4726F9",
+      "AllocationId"
+     ]
+    },
+    "SubnetId": {
+     "Ref": "InferenceVPCPublicSubnet2Subnet81AA912A"
+    },
+    "Tags": [
+     {
+      "Key": "kubernetes.io/role/elb",
+      "Value": "1"
+     },
+     {
+      "Key": "Name",
+      "Value": "LaunchpadStack/InferenceVPC/PublicSubnet2"
+     }
+    ]
+   },
+   "DependsOn": [
+    "InferenceVPCPublicSubnet2DefaultRoute626F2C0B",
+    "InferenceVPCPublicSubnet2RouteTableAssociation4A331AB6"
+   ],
+   "Metadata": {
+    "aws:cdk:path": "LaunchpadStack/InferenceVPC/PublicSubnet2/NATGateway"
+   }
+  },
+  "InferenceVPCIGWB487A726": {
+   "Type": "AWS::EC2::InternetGateway",
+   "Properties": {
+    "Tags": [
+     {
+      "Key": "Name",
+      "Value": "LaunchpadStack/InferenceVPC"
+     }
+    ]
+   },
+   "Metadata": {
+    "aws:cdk:path": "LaunchpadStack/InferenceVPC/IGW"
+   }
+  },
+  "InferenceVPCVPCGW41712A4E": {
+   "Type": "AWS::EC2::VPCGatewayAttachment",
+   "Properties": {
+    "InternetGatewayId": {
+     "Ref": "InferenceVPCIGWB487A726"
+    },
+    "VpcId": {
+     "Ref": "InferenceVPC31404BF4"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "LaunchpadStack/InferenceVPC/VPCGW"
+   }
+  },
+  "InferenceVPCRestrictDefaultSecurityGroupCustomResource6D8AFBC6": {
+   "Type": "Custom::VpcRestrictDefaultSG",
+   "Properties": {
+    "ServiceToken": {
+     "Fn::GetAtt": [
+      "CustomVpcRestrictDefaultSGCustomResourceProviderHandlerDC833E5E",
+      "Arn"
+     ]
+    },
+    "DefaultSecurityGroupId": {
+     "Fn::GetAtt": [
+      "InferenceVPC31404BF4",
+      "DefaultSecurityGroup"
+     ]
+    },
+    "Account": {
+     "Ref": "AWS::AccountId"
+    }
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "LaunchpadStack/InferenceVPC/RestrictDefaultSecurityGroupCustomResource/Default"
+   }
+  },
+  "CustomVpcRestrictDefaultSGCustomResourceProviderRole26592FE0": {
+   "Type": "AWS::IAM::Role",
+   "Properties": {
+    "AssumeRolePolicyDocument": {
+     "Version": "2012-10-17",
+     "Statement": [
+      {
+       "Action": "sts:AssumeRole",
+       "Effect": "Allow",
+       "Principal": {
+        "Service": "lambda.amazonaws.com"
+       }
+      }
+     ]
+    },
+    "ManagedPolicyArns": [
+     {
+      "Fn::Sub": "arn:${AWS::Partition}:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
+     }
+    ],
+    "Policies": [
+     {
+      "PolicyName": "Inline",
+      "PolicyDocument": {
+       "Version": "2012-10-17",
+       "Statement": [
+        {
+         "Effect": "Allow",
+         "Action": [
+          "ec2:AuthorizeSecurityGroupIngress",
+          "ec2:AuthorizeSecurityGroupEgress",
+          "ec2:RevokeSecurityGroupIngress",
+          "ec2:RevokeSecurityGroupEgress"
+         ],
+         "Resource": [
+          {
+           "Fn::Join": [
+            "",
+            [
+             "arn:",
+             {
+              "Ref": "AWS::Partition"
+             },
+             ":ec2:",
+             {
+              "Ref": "AWS::Region"
+             },
+             ":",
+             {
+              "Ref": "AWS::AccountId"
+             },
+             ":security-group/",
+             {
+              "Fn::GetAtt": [
+               "InferenceVPC31404BF4",
+               "DefaultSecurityGroup"
+              ]
+             }
+            ]
+           ]
+          }
+         ]
+        }
+       ]
+      }
+     }
+    ]
+   },
+   "Metadata": {
+    "aws:cdk:path": "LaunchpadStack/Custom::VpcRestrictDefaultSGCustomResourceProvider/Role"
+   }
+  },
+  "CustomVpcRestrictDefaultSGCustomResourceProviderHandlerDC833E5E": {
+   "Type": "AWS::Lambda::Function",
+   "Properties": {
+    "Code": {
+     "S3Bucket": {
+      "Fn::Sub": "cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}"
+     },
+     "S3Key": "7fa1e366ee8a9ded01fc355f704cff92bfd179574e6f9cfee800a3541df1b200.zip"
+    },
+    "Timeout": 900,
+    "MemorySize": 128,
+    "Handler": "__entrypoint__.handler",
+    "Role": {
+     "Fn::GetAtt": [
+      "CustomVpcRestrictDefaultSGCustomResourceProviderRole26592FE0",
+      "Arn"
+     ]
+    },
+    "Runtime": "nodejs20.x",
+    "Description": "Lambda function for removing all inbound/outbound rules from the VPC default security group"
+   },
+   "DependsOn": [
+    "CustomVpcRestrictDefaultSGCustomResourceProviderRole26592FE0"
+   ],
+   "Metadata": {
+    "aws:cdk:path": "LaunchpadStack/Custom::VpcRestrictDefaultSGCustomResourceProvider/Handler",
+    "aws:asset:path": "asset.7fa1e366ee8a9ded01fc355f704cff92bfd179574e6f9cfee800a3541df1b200",
+    "aws:asset:property": "Code"
+   }
+  },
+  "KubectlLayer600207B5": {
+   "Type": "AWS::Lambda::LayerVersion",
+   "Properties": {
+    "Content": {
+     "S3Bucket": {
+      "Fn::Sub": "cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}"
+     },
+     "S3Key": "a5110b475e7a506b8a1282cdfb3c2f7ae59bcf00ba96273a702339b8819dd17f.zip"
+    },
+    "Description": "/opt/kubectl/kubectl 1.31.0; /opt/helm/helm 3.17.1",
+    "LicenseInfo": "Apache-2.0"
+   },
+   "Metadata": {
+    "aws:cdk:path": "LaunchpadStack/KubectlLayer/Resource",
+    "aws:asset:path": "asset.a5110b475e7a506b8a1282cdfb3c2f7ae59bcf00ba96273a702339b8819dd17f.zip",
+    "aws:asset:is-bundled": false,
+    "aws:asset:property": "Content"
+   }
+  },
+  "InferenceClusterKubectlHandlerRoleB0F86519": {
+   "Type": "AWS::IAM::Role",
+   "Properties": {
+    "AssumeRolePolicyDocument": {
+     "Statement": [
+      {
+       "Action": "sts:AssumeRole",
+       "Effect": "Allow",
+       "Principal": {
+        "Service": "lambda.amazonaws.com"
+       }
+      }
+     ],
+     "Version": "2012-10-17"
+    },
+    "ManagedPolicyArns": [
+     {
+      "Fn::Join": [
+       "",
+       [
+        "arn:",
+        {
+         "Ref": "AWS::Partition"
+        },
+        ":iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
+       ]
+      ]
+     },
+     {
+      "Fn::Join": [
+       "",
+       [
+        "arn:",
+        {
+         "Ref": "AWS::Partition"
+        },
+        ":iam::aws:policy/service-role/AWSLambdaVPCAccessExecutionRole"
+       ]
+      ]
+     },
+     {
+      "Fn::Join": [
+       "",
+       [
+        "arn:",
+        {
+         "Ref": "AWS::Partition"
+        },
+        ":iam::aws:policy/AmazonEC2ContainerRegistryReadOnly"
+       ]
+      ]
+     },
+     {
+      "Fn::If": [
+       "InferenceClusterHasEcrPublic5F9EAE55",
+       {
+        "Fn::Join": [
+         "",
+         [
+          "arn:",
+          {
+           "Ref": "AWS::Partition"
+          },
+          ":iam::aws:policy/AmazonElasticContainerRegistryPublicReadOnly"
+         ]
+        ]
+       },
+       {
+        "Ref": "AWS::NoValue"
+       }
+      ]
+     }
+    ]
+   },
+   "Metadata": {
+    "aws:cdk:path": "LaunchpadStack/InferenceCluster/KubectlHandlerRole/Resource"
+   }
+  },
+  "InferenceClusterKubectlHandlerRoleDefaultPolicy3DBA88A2": {
+   "Type": "AWS::IAM::Policy",
+   "Properties": {
+    "PolicyDocument": {
+     "Statement": [
+      {
+       "Action": "eks:DescribeCluster",
+       "Effect": "Allow",
+       "Resource": {
+        "Fn::GetAtt": [
+         "InferenceCluster58835B0A",
+         "Arn"
+        ]
+       }
+      },
+      {
+       "Action": "sts:AssumeRole",
+       "Effect": "Allow",
+       "Resource": {
+        "Fn::GetAtt": [
+         "InferenceClusterCreationRole078FD8C0",
+         "Arn"
+        ]
+       }
+      }
+     ],
+     "Version": "2012-10-17"
+    },
+    "PolicyName": "InferenceClusterKubectlHandlerRoleDefaultPolicy3DBA88A2",
+    "Roles": [
+     {
+      "Ref": "InferenceClusterKubectlHandlerRoleB0F86519"
+     }
+    ]
+   },
+   "Metadata": {
+    "aws:cdk:path": "LaunchpadStack/InferenceCluster/KubectlHandlerRole/DefaultPolicy/Resource"
+   }
+  },
+  "InferenceClusterRoleD28BFEDB": {
+   "Type": "AWS::IAM::Role",
+   "Properties": {
+    "AssumeRolePolicyDocument": {
+     "Statement": [
+      {
+       "Action": "sts:AssumeRole",
+       "Effect": "Allow",
+       "Principal": {
+        "Service": "eks.amazonaws.com"
+       }
+      }
+     ],
+     "Version": "2012-10-17"
+    },
+    "ManagedPolicyArns": [
+     {
+      "Fn::Join": [
+       "",
+       [
+        "arn:",
+        {
+         "Ref": "AWS::Partition"
+        },
+        ":iam::aws:policy/AmazonEKSClusterPolicy"
+       ]
+      ]
+     }
+    ]
+   },
+   "Metadata": {
+    "aws:cdk:path": "LaunchpadStack/InferenceCluster/Role/Resource"
+   }
+  },
+  "InferenceClusterControlPlaneSecurityGroup4CBB1617": {
+   "Type": "AWS::EC2::SecurityGroup",
+   "Properties": {
+    "GroupDescription": "EKS Control Plane Security Group",
+    "SecurityGroupEgress": [
+     {
+      "CidrIp": "0.0.0.0/0",
+      "Description": "Allow all outbound traffic by default",
+      "IpProtocol": "-1"
+     }
+    ],
+    "VpcId": {
+     "Ref": "InferenceVPC31404BF4"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "LaunchpadStack/InferenceCluster/ControlPlaneSecurityGroup/Resource"
+   }
+  },
+  "InferenceClusterCreationRole078FD8C0": {
+   "Type": "AWS::IAM::Role",
+   "Properties": {
+    "AssumeRolePolicyDocument": {
+     "Statement": [
+      {
+       "Action": "sts:AssumeRole",
+       "Effect": "Allow",
+       "Principal": {
+        "AWS": [
+         {
+          "Fn::GetAtt": [
+           "InferenceClusterKubectlHandlerRoleB0F86519",
+           "Arn"
+          ]
+         },
+         {
+          "Fn::GetAtt": [
+           "awscdkawseksClusterResourceProviderNestedStackawscdkawseksClusterResourceProviderNestedStackResource9827C454",
+           "Outputs.LaunchpadStackawscdkawseksClusterResourceProviderIsCompleteHandlerServiceRoleFE3739F6Arn"
+          ]
+         },
+         {
+          "Fn::GetAtt": [
+           "awscdkawseksClusterResourceProviderNestedStackawscdkawseksClusterResourceProviderNestedStackResource9827C454",
+           "Outputs.LaunchpadStackawscdkawseksClusterResourceProviderOnEventHandlerServiceRole477855A2Arn"
+          ]
+         }
+        ]
+       }
+      }
+     ],
+     "Version": "2012-10-17"
+    }
+   },
+   "DependsOn": [
+    "InferenceVPCIGWB487A726",
+    "InferenceVPCPrivateSubnet1DefaultRouteA2D9AD0E",
+    "InferenceVPCPrivateSubnet1RouteTableB4DCD676",
+    "InferenceVPCPrivateSubnet1RouteTableAssociation5BC1A07E",
+    "InferenceVPCPrivateSubnet1Subnet8D7390AF",
+    "InferenceVPCPrivateSubnet2DefaultRoute7EE8BE6A",
+    "InferenceVPCPrivateSubnet2RouteTable90ABD566",
+    "InferenceVPCPrivateSubnet2RouteTableAssociation62D3AF36",
+    "InferenceVPCPrivateSubnet2Subnet93817F76",
+    "InferenceVPCPublicSubnet1DefaultRouteB84340B3",
+    "InferenceVPCPublicSubnet1EIPCB367FE6",
+    "InferenceVPCPublicSubnet1NATGatewayF56DF247",
+    "InferenceVPCPublicSubnet1RouteTable2B0355BA",
+    "InferenceVPCPublicSubnet1RouteTableAssociation707D6A58",
+    "InferenceVPCPublicSubnet1SubnetE777C748",
+    "InferenceVPCPublicSubnet2DefaultRoute626F2C0B",
+    "InferenceVPCPublicSubnet2EIPAF4726F9",
+    "InferenceVPCPublicSubnet2NATGateway1AED3E61",
+    "InferenceVPCPublicSubnet2RouteTable0674BF63",
+    "InferenceVPCPublicSubnet2RouteTableAssociation4A331AB6",
+    "InferenceVPCPublicSubnet2Subnet81AA912A",
+    "InferenceVPC31404BF4",
+    "InferenceVPCRestrictDefaultSecurityGroupCustomResource6D8AFBC6",
+    "InferenceVPCVPCGW41712A4E"
+   ],
+   "Metadata": {
+    "aws:cdk:path": "LaunchpadStack/InferenceCluster/Resource/CreationRole/Resource"
+   }
+  },
+  "InferenceClusterCreationRoleDefaultPolicyC185655A": {
+   "Type": "AWS::IAM::Policy",
+   "Properties": {
+    "PolicyDocument": {
+     "Statement": [
+      {
+       "Action": "iam:PassRole",
+       "Effect": "Allow",
+       "Resource": {
+        "Fn::GetAtt": [
+         "InferenceClusterRoleD28BFEDB",
+         "Arn"
+        ]
+       }
+      },
+      {
+       "Action": [
+        "eks:CreateCluster",
+        "eks:CreateFargateProfile",
+        "eks:DeleteCluster",
+        "eks:DescribeCluster",
+        "eks:DescribeUpdate",
+        "eks:TagResource",
+        "eks:UntagResource",
+        "eks:UpdateClusterConfig",
+        "eks:UpdateClusterVersion"
+       ],
+       "Effect": "Allow",
+       "Resource": [
+        {
+         "Fn::Join": [
+          "",
+          [
+           "arn:",
+           {
+            "Ref": "AWS::Partition"
+           },
+           ":eks:",
+           {
+            "Ref": "AWS::Region"
+           },
+           ":",
+           {
+            "Ref": "AWS::AccountId"
+           },
+           ":cluster/ai-inference-cluster"
+          ]
+         ]
+        },
+        {
+         "Fn::Join": [
+          "",
+          [
+           "arn:",
+           {
+            "Ref": "AWS::Partition"
+           },
+           ":eks:",
+           {
+            "Ref": "AWS::Region"
+           },
+           ":",
+           {
+            "Ref": "AWS::AccountId"
+           },
+           ":cluster/ai-inference-cluster/*"
+          ]
+         ]
+        }
+       ]
+      },
+      {
+       "Action": [
+        "eks:DeleteFargateProfile",
+        "eks:DescribeFargateProfile"
+       ],
+       "Effect": "Allow",
+       "Resource": {
+        "Fn::Join": [
+         "",
+         [
+          "arn:",
+          {
+           "Ref": "AWS::Partition"
+          },
+          ":eks:",
+          {
+           "Ref": "AWS::Region"
+          },
+          ":",
+          {
+           "Ref": "AWS::AccountId"
+          },
+          ":fargateprofile/ai-inference-cluster/*"
+         ]
+        ]
+       }
+      },
+      {
+       "Action": [
+        "ec2:DescribeDhcpOptions",
+        "ec2:DescribeInstances",
+        "ec2:DescribeNetworkInterfaces",
+        "ec2:DescribeRouteTables",
+        "ec2:DescribeSecurityGroups",
+        "ec2:DescribeSubnets",
+        "ec2:DescribeVpcs",
+        "iam:CreateServiceLinkedRole",
+        "iam:GetRole",
+        "iam:listAttachedRolePolicies"
+       ],
+       "Effect": "Allow",
+       "Resource": "*"
+      }
+     ],
+     "Version": "2012-10-17"
+    },
+    "PolicyName": "InferenceClusterCreationRoleDefaultPolicyC185655A",
+    "Roles": [
+     {
+      "Ref": "InferenceClusterCreationRole078FD8C0"
+     }
+    ]
+   },
+   "DependsOn": [
+    "InferenceVPCIGWB487A726",
+    "InferenceVPCPrivateSubnet1DefaultRouteA2D9AD0E",
+    "InferenceVPCPrivateSubnet1RouteTableB4DCD676",
+    "InferenceVPCPrivateSubnet1RouteTableAssociation5BC1A07E",
+    "InferenceVPCPrivateSubnet1Subnet8D7390AF",
+    "InferenceVPCPrivateSubnet2DefaultRoute7EE8BE6A",
+    "InferenceVPCPrivateSubnet2RouteTable90ABD566",
+    "InferenceVPCPrivateSubnet2RouteTableAssociation62D3AF36",
+    "InferenceVPCPrivateSubnet2Subnet93817F76",
+    "InferenceVPCPublicSubnet1DefaultRouteB84340B3",
+    "InferenceVPCPublicSubnet1EIPCB367FE6",
+    "InferenceVPCPublicSubnet1NATGatewayF56DF247",
+    "InferenceVPCPublicSubnet1RouteTable2B0355BA",
+    "InferenceVPCPublicSubnet1RouteTableAssociation707D6A58",
+    "InferenceVPCPublicSubnet1SubnetE777C748",
+    "InferenceVPCPublicSubnet2DefaultRoute626F2C0B",
+    "InferenceVPCPublicSubnet2EIPAF4726F9",
+    "InferenceVPCPublicSubnet2NATGateway1AED3E61",
+    "InferenceVPCPublicSubnet2RouteTable0674BF63",
+    "InferenceVPCPublicSubnet2RouteTableAssociation4A331AB6",
+    "InferenceVPCPublicSubnet2Subnet81AA912A",
+    "InferenceVPC31404BF4",
+    "InferenceVPCRestrictDefaultSecurityGroupCustomResource6D8AFBC6",
+    "InferenceVPCVPCGW41712A4E"
+   ],
+   "Metadata": {
+    "aws:cdk:path": "LaunchpadStack/InferenceCluster/Resource/CreationRole/DefaultPolicy/Resource"
+   }
+  },
+  "InferenceCluster58835B0A": {
+   "Type": "Custom::AWSCDK-EKS-Cluster",
+   "Properties": {
+    "ServiceToken": {
+     "Fn::GetAtt": [
+      "awscdkawseksClusterResourceProviderNestedStackawscdkawseksClusterResourceProviderNestedStackResource9827C454",
+      "Outputs.LaunchpadStackawscdkawseksClusterResourceProviderframeworkonEventAC8D6A88Arn"
+     ]
+    },
+    "Config": {
+     "name": "ai-inference-cluster",
+     "version": "1.28",
+     "roleArn": {
+      "Fn::GetAtt": [
+       "InferenceClusterRoleD28BFEDB",
+       "Arn"
+      ]
+     },
+     "kubernetesNetworkConfig": {
+      "ipFamily": "ipv4"
+     },
+     "resourcesVpcConfig": {
+      "subnetIds": [
+       {
+        "Ref": "InferenceVPCPrivateSubnet1Subnet8D7390AF"
+       },
+       {
+        "Ref": "InferenceVPCPrivateSubnet2Subnet93817F76"
+       }
+      ],
+      "securityGroupIds": [
+       {
+        "Fn::GetAtt": [
+         "InferenceClusterControlPlaneSecurityGroup4CBB1617",
+         "GroupId"
+        ]
+       }
+      ],
+      "endpointPublicAccess": true,
+      "endpointPrivateAccess": true
+     },
+     "accessConfig": {}
+    },
+    "AssumeRoleArn": {
+     "Fn::GetAtt": [
+      "InferenceClusterCreationRole078FD8C0",
+      "Arn"
+     ]
+    },
+    "AttributesRevision": 4
+   },
+   "DependsOn": [
+    "InferenceClusterCreationRoleDefaultPolicyC185655A",
+    "InferenceClusterCreationRole078FD8C0",
+    "InferenceVPCIGWB487A726",
+    "InferenceVPCPrivateSubnet1DefaultRouteA2D9AD0E",
+    "InferenceVPCPrivateSubnet1RouteTableB4DCD676",
+    "InferenceVPCPrivateSubnet1RouteTableAssociation5BC1A07E",
+    "InferenceVPCPrivateSubnet1Subnet8D7390AF",
+    "InferenceVPCPrivateSubnet2DefaultRoute7EE8BE6A",
+    "InferenceVPCPrivateSubnet2RouteTable90ABD566",
+    "InferenceVPCPrivateSubnet2RouteTableAssociation62D3AF36",
+    "InferenceVPCPrivateSubnet2Subnet93817F76",
+    "InferenceVPCPublicSubnet1DefaultRouteB84340B3",
+    "InferenceVPCPublicSubnet1EIPCB367FE6",
+    "InferenceVPCPublicSubnet1NATGatewayF56DF247",
+    "InferenceVPCPublicSubnet1RouteTable2B0355BA",
+    "InferenceVPCPublicSubnet1RouteTableAssociation707D6A58",
+    "InferenceVPCPublicSubnet1SubnetE777C748",
+    "InferenceVPCPublicSubnet2DefaultRoute626F2C0B",
+    "InferenceVPCPublicSubnet2EIPAF4726F9",
+    "InferenceVPCPublicSubnet2NATGateway1AED3E61",
+    "InferenceVPCPublicSubnet2RouteTable0674BF63",
+    "InferenceVPCPublicSubnet2RouteTableAssociation4A331AB6",
+    "InferenceVPCPublicSubnet2Subnet81AA912A",
+    "InferenceVPC31404BF4",
+    "InferenceVPCRestrictDefaultSecurityGroupCustomResource6D8AFBC6",
+    "InferenceVPCVPCGW41712A4E"
+   ],
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "LaunchpadStack/InferenceCluster/Resource/Resource/Default"
+   }
+  },
+  "InferenceClusterKubectlReadyBarrierB692A38D": {
+   "Type": "AWS::SSM::Parameter",
+   "Properties": {
+    "Type": "String",
+    "Value": "aws:cdk:eks:kubectl-ready"
+   },
+   "DependsOn": [
+    "InferenceClusterCreationRoleDefaultPolicyC185655A",
+    "InferenceClusterCreationRole078FD8C0",
+    "InferenceCluster58835B0A"
+   ],
+   "Metadata": {
+    "aws:cdk:path": "LaunchpadStack/InferenceCluster/KubectlReadyBarrier"
+   }
+  },
+  "InferenceClusterNodegroupsystemworkloadsNodeGroupRoleA924357C": {
+   "Type": "AWS::IAM::Role",
+   "Properties": {
+    "AssumeRolePolicyDocument": {
+     "Statement": [
+      {
+       "Action": "sts:AssumeRole",
+       "Effect": "Allow",
+       "Principal": {
+        "Service": "ec2.amazonaws.com"
+       }
+      }
+     ],
+     "Version": "2012-10-17"
+    },
+    "ManagedPolicyArns": [
+     {
+      "Fn::Join": [
+       "",
+       [
+        "arn:",
+        {
+         "Ref": "AWS::Partition"
+        },
+        ":iam::aws:policy/AmazonEKSWorkerNodePolicy"
+       ]
+      ]
+     },
+     {
+      "Fn::Join": [
+       "",
+       [
+        "arn:",
+        {
+         "Ref": "AWS::Partition"
+        },
+        ":iam::aws:policy/AmazonEKS_CNI_Policy"
+       ]
+      ]
+     },
+     {
+      "Fn::Join": [
+       "",
+       [
+        "arn:",
+        {
+         "Ref": "AWS::Partition"
+        },
+        ":iam::aws:policy/AmazonEC2ContainerRegistryReadOnly"
+       ]
+      ]
+     }
+    ]
+   },
+   "Metadata": {
+    "aws:cdk:path": "LaunchpadStack/InferenceCluster/Nodegroupsystem-workloads/NodeGroupRole/Resource"
+   }
+  },
+  "InferenceClusterNodegroupsystemworkloads4C23B1E0": {
+   "Type": "AWS::EKS::Nodegroup",
+   "Properties": {
+    "AmiType": "AL2_x86_64",
+    "ClusterName": {
+     "Ref": "InferenceCluster58835B0A"
+    },
+    "DiskSize": 100,
+    "ForceUpdateEnabled": true,
+    "InstanceTypes": [
+     "m5.xlarge"
+    ],
+    "Labels": {
+     "workload": "system"
+    },
+    "NodeRole": {
+     "Fn::GetAtt": [
+      "InferenceClusterNodegroupsystemworkloadsNodeGroupRoleA924357C",
+      "Arn"
+     ]
+    },
+    "ScalingConfig": {
+     "DesiredSize": 1,
+     "MaxSize": 3,
+     "MinSize": 1
+    },
+    "Subnets": [
+     {
+      "Ref": "InferenceVPCPrivateSubnet1Subnet8D7390AF"
+     },
+     {
+      "Ref": "InferenceVPCPrivateSubnet2Subnet93817F76"
+     }
+    ],
+    "Taints": []
+   },
+   "Metadata": {
+    "aws:cdk:path": "LaunchpadStack/InferenceCluster/Nodegroupsystem-workloads/Resource"
+   }
+  },
+  "InferenceClusterAwsAuthmanifestE66DF118": {
+   "Type": "Custom::AWSCDK-EKS-KubernetesResource",
+   "Properties": {
+    "ServiceToken": {
+     "Fn::GetAtt": [
+      "awscdkawseksKubectlProviderNestedStackawscdkawseksKubectlProviderNestedStackResourceA7AEBA6B",
+      "Outputs.LaunchpadStackawscdkawseksKubectlProviderframeworkonEventBDAC62C7Arn"
+     ]
+    },
+    "Manifest": {
+     "Fn::Join": [
+      "",
+      [
+       "[{\"apiVersion\":\"v1\",\"kind\":\"ConfigMap\",\"metadata\":{\"name\":\"aws-auth\",\"namespace\":\"kube-system\",\"labels\":{\"aws.cdk.eks/prune-c8d9b3d19da8706e6827fc994a7a3a326b7a4fdb30\":\"\"}},\"data\":{\"mapRoles\":\"[{\\\"rolearn\\\":\\\"",
+       {
+        "Fn::GetAtt": [
+         "InferenceClusterNodegroupsystemworkloadsNodeGroupRoleA924357C",
+         "Arn"
+        ]
+       },
+       "\\\",\\\"username\\\":\\\"system:node:{{EC2PrivateDNSName}}\\\",\\\"groups\\\":[\\\"system:bootstrappers\\\",\\\"system:nodes\\\"]},{\\\"rolearn\\\":\\\"",
+       {
+        "Fn::GetAtt": [
+         "InferenceClusterNodegroupnvidiainferenceNodeGroupRole8A9DA69B",
+         "Arn"
+        ]
+       },
+       "\\\",\\\"username\\\":\\\"system:node:{{EC2PrivateDNSName}}\\\",\\\"groups\\\":[\\\"system:bootstrappers\\\",\\\"system:nodes\\\"]},{\\\"rolearn\\\":\\\"",
+       {
+        "Fn::GetAtt": [
+         "InferenceClusterNodegroupinferentiainferenceNodeGroupRoleA7F563C3",
+         "Arn"
+        ]
+       },
+       "\\\",\\\"username\\\":\\\"system:node:{{EC2PrivateDNSName}}\\\",\\\"groups\\\":[\\\"system:bootstrappers\\\",\\\"system:nodes\\\"]}]\",\"mapUsers\":\"[]\",\"mapAccounts\":\"[]\"}}]"
+      ]
+     ]
+    },
+    "ClusterName": {
+     "Ref": "InferenceCluster58835B0A"
+    },
+    "RoleArn": {
+     "Fn::GetAtt": [
+      "InferenceClusterCreationRole078FD8C0",
+      "Arn"
+     ]
+    },
+    "PruneLabel": "aws.cdk.eks/prune-c8d9b3d19da8706e6827fc994a7a3a326b7a4fdb30",
+    "Overwrite": true
+   },
+   "DependsOn": [
+    "InferenceClusterKubectlReadyBarrierB692A38D"
+   ],
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "LaunchpadStack/InferenceCluster/AwsAuth/manifest/Resource/Default"
+   }
+  },
+  "InferenceClusterNodegroupnvidiainferenceNodeGroupRole8A9DA69B": {
+   "Type": "AWS::IAM::Role",
+   "Properties": {
+    "AssumeRolePolicyDocument": {
+     "Statement": [
+      {
+       "Action": "sts:AssumeRole",
+       "Effect": "Allow",
+       "Principal": {
+        "Service": "ec2.amazonaws.com"
+       }
+      }
+     ],
+     "Version": "2012-10-17"
+    },
+    "ManagedPolicyArns": [
+     {
+      "Fn::Join": [
+       "",
+       [
+        "arn:",
+        {
+         "Ref": "AWS::Partition"
+        },
+        ":iam::aws:policy/AmazonEKSWorkerNodePolicy"
+       ]
+      ]
+     },
+     {
+      "Fn::Join": [
+       "",
+       [
+        "arn:",
+        {
+         "Ref": "AWS::Partition"
+        },
+        ":iam::aws:policy/AmazonEKS_CNI_Policy"
+       ]
+      ]
+     },
+     {
+      "Fn::Join": [
+       "",
+       [
+        "arn:",
+        {
+         "Ref": "AWS::Partition"
+        },
+        ":iam::aws:policy/AmazonEC2ContainerRegistryReadOnly"
+       ]
+      ]
+     }
+    ]
+   },
+   "Metadata": {
+    "aws:cdk:path": "LaunchpadStack/InferenceCluster/Nodegroupnvidia-inference/NodeGroupRole/Resource"
+   }
+  },
+  "InferenceClusterNodegroupnvidiainference3878B1C4": {
+   "Type": "AWS::EKS::Nodegroup",
+   "Properties": {
+    "AmiType": "AL2_x86_64_GPU",
+    "ClusterName": {
+     "Ref": "InferenceCluster58835B0A"
+    },
+    "DiskSize": 200,
+    "ForceUpdateEnabled": true,
+    "InstanceTypes": [
+     "g5.xlarge"
+    ],
+    "Labels": {
+     "workload": "inference",
+     "accelerator": "nvidia"
+    },
+    "NodeRole": {
+     "Fn::GetAtt": [
+      "InferenceClusterNodegroupnvidiainferenceNodeGroupRole8A9DA69B",
+      "Arn"
+     ]
+    },
+    "ScalingConfig": {
+     "DesiredSize": 1,
+     "MaxSize": 5,
+     "MinSize": 1
+    },
+    "Subnets": [
+     {
+      "Ref": "InferenceVPCPrivateSubnet1Subnet8D7390AF"
+     },
+     {
+      "Ref": "InferenceVPCPrivateSubnet2Subnet93817F76"
+     }
+    ],
+    "Taints": [
+     {
+      "Effect": "NO_SCHEDULE",
+      "Key": "nvidia.com/gpu",
+      "Value": "true"
+     }
+    ]
+   },
+   "Metadata": {
+    "aws:cdk:path": "LaunchpadStack/InferenceCluster/Nodegroupnvidia-inference/Resource"
+   }
+  },
+  "InferenceClusterchartnvidiadeviceplugin95524A92": {
+   "Type": "Custom::AWSCDK-EKS-HelmChart",
+   "Properties": {
+    "ServiceToken": {
+     "Fn::GetAtt": [
+      "awscdkawseksKubectlProviderNestedStackawscdkawseksKubectlProviderNestedStackResourceA7AEBA6B",
+      "Outputs.LaunchpadStackawscdkawseksKubectlProviderframeworkonEventBDAC62C7Arn"
+     ]
+    },
+    "ClusterName": {
+     "Ref": "InferenceCluster58835B0A"
+    },
+    "RoleArn": {
+     "Fn::GetAtt": [
+      "InferenceClusterCreationRole078FD8C0",
+      "Arn"
+     ]
+    },
+    "Release": "dstackinferenceclusterchartnvidiadeviceplugin3c1f3e3b",
+    "Chart": "nvidia-device-plugin",
+    "Version": "0.17.1",
+    "Namespace": "nvidia-device-plugin",
+    "Repository": "https://nvidia.github.io/k8s-device-plugin",
+    "CreateNamespace": true
+   },
+   "DependsOn": [
+    "InferenceClusterKubectlReadyBarrierB692A38D"
+   ],
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "LaunchpadStack/InferenceCluster/chart-nvidia-device-plugin/Resource/Default"
+   }
+  },
+  "InferenceClustermanifestNeuronDevicePluginF2CBEFA1": {
+   "Type": "Custom::AWSCDK-EKS-KubernetesResource",
+   "Properties": {
+    "ServiceToken": {
+     "Fn::GetAtt": [
+      "awscdkawseksKubectlProviderNestedStackawscdkawseksKubectlProviderNestedStackResourceA7AEBA6B",
+      "Outputs.LaunchpadStackawscdkawseksKubectlProviderframeworkonEventBDAC62C7Arn"
+     ]
+    },
+    "Manifest": "[{\"apiVersion\":\"apps/v1\",\"kind\":\"DaemonSet\",\"metadata\":{\"name\":\"neuron-device-plugin-daemonset\",\"namespace\":\"kube-system\",\"labels\":{\"aws.cdk.eks/prune-c8b38263aeebce7943715c2fbca83ec24ee906fb5e\":\"\"}},\"spec\":{\"selector\":{\"matchLabels\":{\"name\":\"neuron-device-plugin-ds\"}},\"updateStrategy\":{\"type\":\"RollingUpdate\"},\"template\":{\"metadata\":{\"annotations\":{\"scheduler.alpha.kubernetes.io/critical-pod\":\"\"},\"labels\":{\"name\":\"neuron-device-plugin-ds\"}},\"spec\":{\"tolerations\":[{\"key\":\"CriticalAddonsOnly\",\"operator\":\"Exists\"},{\"key\":\"aws.amazon.com/neuron\",\"operator\":\"Exists\",\"effect\":\"NoSchedule\"}],\"priorityClassName\":\"system-node-critical\",\"affinity\":{\"nodeAffinity\":{\"requiredDuringSchedulingIgnoredDuringExecution\":{\"nodeSelectorTerms\":[{\"matchExpressions\":[{\"key\":\"beta.kubernetes.io/instance-type\",\"operator\":\"In\",\"values\":[\"inf1.xlarge\",\"inf1.2xlarge\",\"inf1.6xlarge\",\"inf1.24xlarge\",\"inf2.xlarge\",\"inf2.8xlarge\",\"inf2.24xlarge\",\"inf2.48xlarge\"]}]},{\"matchExpressions\":[{\"key\":\"node.kubernetes.io/instance-type\",\"operator\":\"In\",\"values\":[\"inf1.xlarge\",\"inf1.2xlarge\",\"inf1.6xlarge\",\"inf1.24xlarge\",\"inf2.xlarge\",\"inf2.8xlarge\",\"inf2.24xlarge\",\"inf2.48xlarge\"]}]}]}}},\"containers\":[{\"image\":\"790709498068.dkr.ecr.us-west-2.amazonaws.com/neuron-device-plugin:1.0.9043.0\",\"imagePullPolicy\":\"Always\",\"name\":\"k8s-neuron-device-plugin-ctr\",\"securityContext\":{\"allowPrivilegeEscalation\":false,\"capabilities\":{\"drop\":[\"ALL\"]}},\"volumeMounts\":[{\"name\":\"device-plugin\",\"mountPath\":\"/var/lib/kubelet/device-plugins\"}]}],\"volumes\":[{\"name\":\"device-plugin\",\"hostPath\":{\"path\":\"/var/lib/kubelet/device-plugins\"}}]}}}}]",
+    "ClusterName": {
+     "Ref": "InferenceCluster58835B0A"
+    },
+    "RoleArn": {
+     "Fn::GetAtt": [
+      "InferenceClusterCreationRole078FD8C0",
+      "Arn"
+     ]
+    },
+    "PruneLabel": "aws.cdk.eks/prune-c8b38263aeebce7943715c2fbca83ec24ee906fb5e"
+   },
+   "DependsOn": [
+    "InferenceClusterKubectlReadyBarrierB692A38D"
+   ],
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "LaunchpadStack/InferenceCluster/manifest-NeuronDevicePlugin/Resource/Default"
+   }
+  },
+  "InferenceClusterNodegroupinferentiainferenceNodeGroupRoleA7F563C3": {
+   "Type": "AWS::IAM::Role",
+   "Properties": {
+    "AssumeRolePolicyDocument": {
+     "Statement": [
+      {
+       "Action": "sts:AssumeRole",
+       "Effect": "Allow",
+       "Principal": {
+        "Service": "ec2.amazonaws.com"
+       }
+      }
+     ],
+     "Version": "2012-10-17"
+    },
+    "ManagedPolicyArns": [
+     {
+      "Fn::Join": [
+       "",
+       [
+        "arn:",
+        {
+         "Ref": "AWS::Partition"
+        },
+        ":iam::aws:policy/AmazonEKSWorkerNodePolicy"
+       ]
+      ]
+     },
+     {
+      "Fn::Join": [
+       "",
+       [
+        "arn:",
+        {
+         "Ref": "AWS::Partition"
+        },
+        ":iam::aws:policy/AmazonEKS_CNI_Policy"
+       ]
+      ]
+     },
+     {
+      "Fn::Join": [
+       "",
+       [
+        "arn:",
+        {
+         "Ref": "AWS::Partition"
+        },
+        ":iam::aws:policy/AmazonEC2ContainerRegistryReadOnly"
+       ]
+      ]
+     }
+    ]
+   },
+   "Metadata": {
+    "aws:cdk:path": "LaunchpadStack/InferenceCluster/Nodegroupinferentia-inference/NodeGroupRole/Resource"
+   }
+  },
+  "InferenceClusterNodegroupinferentiainferenceFF58D7EB": {
+   "Type": "AWS::EKS::Nodegroup",
+   "Properties": {
+    "AmiType": "AL2023_x86_64_NEURON",
+    "ClusterName": {
+     "Ref": "InferenceCluster58835B0A"
+    },
+    "DiskSize": 200,
+    "ForceUpdateEnabled": true,
+    "InstanceTypes": [
+     "inf2.xlarge"
+    ],
+    "Labels": {
+     "workload": "inference",
+     "accelerator": "inferentia"
+    },
+    "NodeRole": {
+     "Fn::GetAtt": [
+      "InferenceClusterNodegroupinferentiainferenceNodeGroupRoleA7F563C3",
+      "Arn"
+     ]
+    },
+    "ScalingConfig": {
+     "DesiredSize": 1,
+     "MaxSize": 5,
+     "MinSize": 1
+    },
+    "Subnets": [
+     {
+      "Ref": "InferenceVPCPrivateSubnet1Subnet8D7390AF"
+     },
+     {
+      "Ref": "InferenceVPCPrivateSubnet2Subnet93817F76"
+     }
+    ],
+    "Taints": [
+     {
+      "Effect": "NO_SCHEDULE",
+      "Key": "aws.amazon.com/neuron",
+      "Value": "true"
+     }
+    ]
+   },
+   "Metadata": {
+    "aws:cdk:path": "LaunchpadStack/InferenceCluster/Nodegroupinferentia-inference/Resource"
+   }
+  },
+  "awscdkawseksClusterResourceProviderNestedStackawscdkawseksClusterResourceProviderNestedStackResource9827C454": {
+   "Type": "AWS::CloudFormation::Stack",
+   "Properties": {
+    "TemplateURL": {
+     "Fn::Join": [
+      "",
+      [
+       "https://s3.",
+       {
+        "Ref": "AWS::Region"
+       },
+       ".",
+       {
+        "Ref": "AWS::URLSuffix"
+       },
+       "/",
+       {
+        "Fn::Sub": "cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}"
+       },
+       "/1a37e5f862e157d85c8a0bbd34bbdcbf532cbde8aa43b2821f75f5e4cadf6cfa.json"
+      ]
+     ]
+    }
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "LaunchpadStack/@aws-cdk--aws-eks.ClusterResourceProvider.NestedStack/@aws-cdk--aws-eks.ClusterResourceProvider.NestedStackResource",
+    "aws:asset:path": "LaunchpadStackawscdkawseksClusterResourceProviderF3D05E14.nested.template.json",
+    "aws:asset:property": "TemplateURL"
+   }
+  },
+  "awscdkawseksKubectlProviderNestedStackawscdkawseksKubectlProviderNestedStackResourceA7AEBA6B": {
+   "Type": "AWS::CloudFormation::Stack",
+   "Properties": {
+    "Parameters": {
+     "referencetoLaunchpadStackKubectlLayerC44F1B4DRef": {
+      "Ref": "KubectlLayer600207B5"
+     },
+     "referencetoLaunchpadStackInferenceClusterKubectlHandlerRoleB0790511Arn": {
+      "Fn::GetAtt": [
+       "InferenceClusterKubectlHandlerRoleB0F86519",
+       "Arn"
+      ]
+     },
+     "referencetoLaunchpadStackInferenceVPCPrivateSubnet1Subnet01C65E46Ref": {
+      "Ref": "InferenceVPCPrivateSubnet1Subnet8D7390AF"
+     },
+     "referencetoLaunchpadStackInferenceVPCPrivateSubnet2Subnet53B15FF3Ref": {
+      "Ref": "InferenceVPCPrivateSubnet2Subnet93817F76"
+     },
+     "referencetoLaunchpadStackInferenceClusterCB6BBEEEClusterSecurityGroupId": {
+      "Fn::GetAtt": [
+       "InferenceCluster58835B0A",
+       "ClusterSecurityGroupId"
+      ]
+     }
+    },
+    "TemplateURL": {
+     "Fn::Join": [
+      "",
+      [
+       "https://s3.",
+       {
+        "Ref": "AWS::Region"
+       },
+       ".",
+       {
+        "Ref": "AWS::URLSuffix"
+       },
+       "/",
+       {
+        "Fn::Sub": "cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}"
+       },
+       "/57092a77b00e5a61efc94a3594be23cea91b738ebdf61ec5b9db1296e42365ca.json"
+      ]
+     ]
+    }
+   },
+   "DependsOn": [
+    "InferenceClusterKubectlHandlerRoleDefaultPolicy3DBA88A2",
+    "InferenceClusterKubectlHandlerRoleB0F86519",
+    "InferenceVPCPrivateSubnet1DefaultRouteA2D9AD0E",
+    "InferenceVPCPrivateSubnet1RouteTableAssociation5BC1A07E",
+    "InferenceVPCPrivateSubnet2DefaultRoute7EE8BE6A",
+    "InferenceVPCPrivateSubnet2RouteTableAssociation62D3AF36"
+   ],
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "LaunchpadStack/@aws-cdk--aws-eks.KubectlProvider.NestedStack/@aws-cdk--aws-eks.KubectlProvider.NestedStackResource",
+    "aws:asset:path": "LaunchpadStackawscdkawseksKubectlProviderEA8EDE9C.nested.template.json",
+    "aws:asset:property": "TemplateURL"
+   }
+  },
+  "CDKMetadata": {
+   "Type": "AWS::CDK::Metadata",
+   "Properties": {
+    "Analytics": "v2:deflate64:H4sIAAAAAAAA/+1YWW/iSBD+LenHUeMZwgqN8rSON8qgSQiChIdFCBXdBfTSblt9kDAW/33UPjCTTDI5liy72gfL7jq6vjra5fJxkDU/N4PmEdyaBuPLhhTTIBtYYEsKt2aSITsOsmHKRhmJ4S78ZsgJ+UAoMW6q0EaJmom502BFosjJKCMKYvxB5HqdekJPixVYJJQwwfUlmGUutaFPqLipFOyBxngzptFMDXsRLTcd5FqjjMAKhISpkMKu/0xUtesqZR1ePvu9TmXCluU6hrSw00mv1AU4xRbkZAbSICUiXbWje/JgjJirTrpqh5xrNOZKRRpL/0uHDgPG4SA5EBhF3RTF4p/6ibN4DVOJNb2mhcYkTOQbbIVpAelvrzer3QFE900ociCcd8Geg8VbWJOTEflAxgcD8DBQPBqmvDbPOj1/q7l+1VEWtcJd0rAXlavQWmCLGJWlA2ROC7s+14lLR5l3rMTF0TAt0hpHcRB25TfUtCZgDFoThP5GTSs4dWyJ9hQMjsZUQjzlEEQzdQFr1EPUxh8NXJogi6QzFrU3WpCreBb0bv2Cr0Gt0vIcmbxv/LRZbMaULN0UmZW50VIVFU8ToWzIGBqzdXIGTtoIUmDCruu0c95NOM69lzXTB90zY1GaDC+OJ3ef25P2b0XAhEY+EN8q3FyY5c5SwhSl2VbJ3Q4rFmpnZSoXH/OQEgtC5UEYb8avAjw57938Y6AzgrMZMktOSPdqMoi+nP1xc3FGKFniuso0SIfb3v0yFz8dtyovu2c3/avuv8jRMd06Ocqqs1C9Kl5ZeEIZC4qhVzb7LUb6HMzPrb13w/3SND3t5avK72B9zV/725qk4a0JnV3Qr26aNxg0l6DEDI2lX1DG0QK03VABcZD1E4n+e8cYFyM/XXt4qRaKiRRkyFjilK2boIvRK4Rsp/ORGBTMkfcSKZjAAv4ubR1qtZMU4Pw66VUmCgmvU3LzttdRUijc8rafG08yOb/ctfoMHG+V3zH9lEvvGNtXm6rduI9+f+l6sbH/kMpcg89I3hm3IXlr9t67/vdbi/97sx/5cTH1SqQFq/o6y0/rdeI5Dw7xQzLnAwsW/YBifij6h+R9779Hch6rIkybDe2jSZxmWJ3a+9eYRs7YJP6V3GNXkZlS+d5ePZ2sBEfthzaaD3IDC3Oh5l4nShQX1Q+N/B/fhn4KWke/lz//PhYzXkP6WatRDl6NVasZfC2eh61mPoeV8e+t7SJRH1tBsxm0j/4yQjS0U1bEGPSL+3doMtsuXxQAAA=="
+   },
+   "Metadata": {
+    "aws:cdk:path": "LaunchpadStack/CDKMetadata/Default"
+   },
+   "Condition": "CDKMetadataAvailable"
+  }
+ },
+ "Conditions": {
+  "InferenceClusterHasEcrPublic5F9EAE55": {
+   "Fn::Equals": [
+    {
+     "Ref": "AWS::Partition"
+    },
+    "aws"
+   ]
+  },
+  "CDKMetadataAvailable": {
+   "Fn::Or": [
+    {
+     "Fn::Or": [
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "af-south-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "ap-east-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "ap-northeast-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "ap-northeast-2"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "ap-northeast-3"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "ap-south-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "ap-south-2"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "ap-southeast-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "ap-southeast-2"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "ap-southeast-3"
+       ]
+      }
+     ]
+    },
+    {
+     "Fn::Or": [
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "ap-southeast-4"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "ca-central-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "ca-west-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "cn-north-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "cn-northwest-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "eu-central-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "eu-central-2"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "eu-north-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "eu-south-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "eu-south-2"
+       ]
+      }
+     ]
+    },
+    {
+     "Fn::Or": [
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "eu-west-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "eu-west-2"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "eu-west-3"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "il-central-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "me-central-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "me-south-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "sa-east-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "us-east-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "us-east-2"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "us-west-1"
+       ]
+      }
+     ]
+    },
+    {
+     "Fn::Equals": [
+      {
+       "Ref": "AWS::Region"
+      },
+      "us-west-2"
+     ]
+    }
+   ]
+  }
+ },
+ "Parameters": {
+  "BootstrapVersion": {
+   "Type": "AWS::SSM::Parameter::Value<String>",
+   "Default": "/cdk-bootstrap/hnb659fds/version",
+   "Description": "Version of the CDK Bootstrap resources in this environment, automatically retrieved from SSM Parameter Store. [cdk:skip]"
+  }
+ },
+ "Rules": {
+  "CheckBootstrapVersion": {
+   "Assertions": [
+    {
+     "Assert": {
+      "Fn::Not": [
+       {
+        "Fn::Contains": [
+         [
+          "1",
+          "2",
+          "3",
+          "4",
+          "5"
+         ],
+         {
+          "Ref": "BootstrapVersion"
+         }
+        ]
+       }
+      ]
+     },
+     "AssertDescription": "CDK bootstrap stack version 6 required. Please run 'cdk bootstrap' with a recent version of the CDK CLI."
+    }
+   ]
+  }
+ }
+}
