@@ -193,34 +193,6 @@ class LaunchpadStack(Stack):
                         value=taint['value'],
                         effect=eks.TaintEffect(taint['effect'])
                     ))
-            if 'nvidia' in accelerators:
-                cluster.add_helm_chart(
-                "nvidia-device-plugin",
-                chart="nvidia-device-plugin",
-                repository="https://nvidia.github.io/k8s-device-plugin",
-                namespace="nvidia-device-plugin",
-                create_namespace=True,
-                wait=True,
-                timeout=Duration.minutes(10),
-                version="0.17.1"
-            )
-
-            # Install Neuron device plugin if Inferentia nodes are present
-            if 'inferentia' in accelerators:
-                cluster.add_helm_chart(
-                "aws-neuron-device-plugin",
-                chart="aws-neuron-device-plugin",
-                repository="https://aws.github.io/eks-charts",
-                namespace="kube-system", 
-                create_namespace=False,
-                wait=True,
-                timeout=Duration.minutes(10),
-                values={
-                    "npd": {
-                        "enabled": "false"
-                    }
-                }
-            )
             
             # Get labels with empty dict as default
             labels = ng_params.get('labels', {})
@@ -251,6 +223,36 @@ class LaunchpadStack(Stack):
                 ami_type=ami_type,
                 subnets=ec2.SubnetSelection(subnet_type=ec2.SubnetType.PRIVATE_WITH_EGRESS)
             )
+
+        if 'nvidia' in accelerators:
+            cluster.add_helm_chart(
+            "nvidia-device-plugin",
+            chart="nvidia-device-plugin",
+            repository="https://nvidia.github.io/k8s-device-plugin",
+            namespace="nvidia-device-plugin",
+            create_namespace=True,
+            wait=True,
+            timeout=Duration.minutes(10),
+            version="0.17.1"
+        )
+
+        # Install Neuron device plugin if Inferentia nodes are present
+        if 'inferentia' in accelerators:
+            cluster.add_helm_chart(
+            "aws-neuron-device-plugin",
+            chart="aws-neuron-device-plugin",
+            repository="https://aws.github.io/eks-charts",
+            namespace="kube-system", 
+            create_namespace=False,
+            wait=True,
+            timeout=Duration.minutes(10),
+            values={
+                "npd": {
+                    "enabled": "false"
+                }
+            }
+        )
+            
     def _get_ami_type(self, instance_type: str, labels: dict) -> eks.NodegroupAmiType:
         """
         Determine the appropriate AMI type based on instance type and labels

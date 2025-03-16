@@ -1407,42 +1407,6 @@
     "aws:cdk:path": "LaunchpadStack/InferenceCluster/Nodegroupnvidia-inference/Resource"
    }
   },
-  "InferenceClusterchartnvidiadeviceplugin95524A92": {
-   "Type": "Custom::AWSCDK-EKS-HelmChart",
-   "Properties": {
-    "ServiceToken": {
-     "Fn::GetAtt": [
-      "awscdkawseksKubectlProviderNestedStackawscdkawseksKubectlProviderNestedStackResourceA7AEBA6B",
-      "Outputs.LaunchpadStackawscdkawseksKubectlProviderframeworkonEventBDAC62C7Arn"
-     ]
-    },
-    "ClusterName": {
-     "Ref": "InferenceCluster58835B0A"
-    },
-    "RoleArn": {
-     "Fn::GetAtt": [
-      "InferenceClusterCreationRole078FD8C0",
-      "Arn"
-     ]
-    },
-    "Release": "dstackinferenceclusterchartnvidiadeviceplugin3c1f3e3b",
-    "Chart": "nvidia-device-plugin",
-    "Version": "0.17.1",
-    "Wait": true,
-    "Timeout": "600s",
-    "Namespace": "nvidia-device-plugin",
-    "Repository": "https://nvidia.github.io/k8s-device-plugin",
-    "CreateNamespace": true
-   },
-   "DependsOn": [
-    "InferenceClusterKubectlReadyBarrierB692A38D"
-   ],
-   "UpdateReplacePolicy": "Delete",
-   "DeletionPolicy": "Delete",
-   "Metadata": {
-    "aws:cdk:path": "LaunchpadStack/InferenceCluster/chart-nvidia-device-plugin/Resource/Default"
-   }
-  },
   "InferenceClustermanifestNeuronDevicePluginF2CBEFA1": {
    "Type": "Custom::AWSCDK-EKS-KubernetesResource",
    "Properties": {
@@ -1578,6 +1542,77 @@
     "aws:cdk:path": "LaunchpadStack/InferenceCluster/Nodegroupinferentia-inference/Resource"
    }
   },
+  "InferenceClusterchartnvidiadeviceplugin95524A92": {
+   "Type": "Custom::AWSCDK-EKS-HelmChart",
+   "Properties": {
+    "ServiceToken": {
+     "Fn::GetAtt": [
+      "awscdkawseksKubectlProviderNestedStackawscdkawseksKubectlProviderNestedStackResourceA7AEBA6B",
+      "Outputs.LaunchpadStackawscdkawseksKubectlProviderframeworkonEventBDAC62C7Arn"
+     ]
+    },
+    "ClusterName": {
+     "Ref": "InferenceCluster58835B0A"
+    },
+    "RoleArn": {
+     "Fn::GetAtt": [
+      "InferenceClusterCreationRole078FD8C0",
+      "Arn"
+     ]
+    },
+    "Release": "dstackinferenceclusterchartnvidiadeviceplugin3c1f3e3b",
+    "Chart": "nvidia-device-plugin",
+    "Version": "0.17.1",
+    "Wait": true,
+    "Timeout": "600s",
+    "Namespace": "nvidia-device-plugin",
+    "Repository": "https://nvidia.github.io/k8s-device-plugin",
+    "CreateNamespace": true
+   },
+   "DependsOn": [
+    "InferenceClusterKubectlReadyBarrierB692A38D"
+   ],
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "LaunchpadStack/InferenceCluster/chart-nvidia-device-plugin/Resource/Default"
+   }
+  },
+  "InferenceClusterchartawsneurondeviceplugin4C04AA54": {
+   "Type": "Custom::AWSCDK-EKS-HelmChart",
+   "Properties": {
+    "ServiceToken": {
+     "Fn::GetAtt": [
+      "awscdkawseksKubectlProviderNestedStackawscdkawseksKubectlProviderNestedStackResourceA7AEBA6B",
+      "Outputs.LaunchpadStackawscdkawseksKubectlProviderframeworkonEventBDAC62C7Arn"
+     ]
+    },
+    "ClusterName": {
+     "Ref": "InferenceCluster58835B0A"
+    },
+    "RoleArn": {
+     "Fn::GetAtt": [
+      "InferenceClusterCreationRole078FD8C0",
+      "Arn"
+     ]
+    },
+    "Release": "ackinferenceclusterchartawsneurondevicepluginde563118",
+    "Chart": "aws-neuron-device-plugin",
+    "Wait": true,
+    "Timeout": "600s",
+    "Values": "{\"npd\":{\"enabled\":\"false\"}}",
+    "Namespace": "kube-system",
+    "Repository": "https://aws.github.io/eks-charts"
+   },
+   "DependsOn": [
+    "InferenceClusterKubectlReadyBarrierB692A38D"
+   ],
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "LaunchpadStack/InferenceCluster/chart-aws-neuron-device-plugin/Resource/Default"
+   }
+  },
   "awscdkawseksClusterResourceProviderNestedStackawscdkawseksClusterResourceProviderNestedStackResource9827C454": {
    "Type": "AWS::CloudFormation::Stack",
    "Properties": {
@@ -1676,7 +1711,7 @@
   "CDKMetadata": {
    "Type": "AWS::CDK::Metadata",
    "Properties": {
-    "Analytics": "v2:deflate64:H4sIAAAAAAAA/+1YW2/iOBT+LfXjyGSGskKjPk2a6XbQtDSClodFCB3sA3hxnMgXWibiv6+cCzDtttvL0mVX+xAlPhf7O8efc3JyHOTNz82geQS3psH4oiHFJMj7FtiCwq0Z58iOg3yQsWFOErgLfxhyQj4QSoybKLRRqqZi5jRYkSpyMsyJggR/MrleZV4Qa7EEi4QSJri+BLMorNb0CRc3kYI98BitRzSaqkEc0WrSfuE1zAksQUiYCCns6rdU1bMuM9bh1bOf61SmbFGNE8jKdTrZlboAp9icnExBGqREZMt2dM8ejBEz1cmW7ZBzjcZcqUhjFX8V0GHAOBwkBwKj5E1JFv/US53Fa5hI3Mq3stCYlIligo0xLSH97Xyz2h1Adt+EogDCeRfsOVi8hRU5GZIPZHQwAA8DxaNpKrh51on9bav1o46yqBXuigZxVI1Ca4HNE1SW9pE5LezqXKcuG+Y+sAoXR8O0yLY4yoOwa7+mpjUGY9CaIPQ3alrBqWMLtKdgcDiiEpIJhyCaqgtYoR6gNv5o4MIEeSSdsaj9oqW4zmcp725f8FtQy6w6R6aoG39aLNYjShZugszKYtE6z87OUVnBitReptz7hHFnHHa/jqOr7q+d8/FlGBNKUPEsFcqGjKExm3RMwUkbQQZM2NWWIJx3U44zn4+t0m+PVyaiAhdeHI/vPrfH7V/K1AqNvC9+1BFyYRY7QwkTlGbDp7sdVSLUzsjUyXgsF5RYEKpI12g9ehXg8Xl884+BzglOp8gsOSHdq3E/+nb29ebijFCywFXNCZAON1X+ZSF+Om7VUXbPbnpX3X9RoCO6CXKY16emJvsriSeUsaAYemezXzLS52B+LvfeDfdLt+npKF9Fv4ONtSgQG07S8NaEzs7pdzcpShGaS1BiisbSbyiTaA7arqmAJMh7qUT/ZWSMS5Cfrjy8TAvFRAYyZCx1ym7LpUvQO4Rsp0aSBBTMkMepFExgCX9Xtgq12tkU4Pw6jeslSgvvU2mLAtlRUijc6DYfJk8qOb/cXfUZON5qv7P0UyG9Y25fvdQ2jPvo97ddL17sP+Qy0+B3pKiMm5S8dffem//75eL/0ezHflT2xxJpqaq/zorTep16zYND/FDMed+CRd/KmJ9I/1C87/n3KC5yVaZpvaY9NKnTDOtTe/8a0cgZmyZ/ZffYVe5M5XxvrlinS8FR+/aOFi1f38JMqJn3iVLFRf3ro/gbuKafgtbRl+o34ceyG2xI35U1qhatsWw1g+/l86DVLDq2Kv/xys5T9bEVNJtB++h3I0RDO2VFgkGvvP8Bc4QFwYkUAAA="
+    "Analytics": "v2:deflate64:H4sIAAAAAAAA/+1YW2/aSBT+LZnHanBLWKEqT3XcbIoaiAVJHhYhdJg5wCzjsTUXEmrx31fjC9CkTXNZsuxqHyx7zmXOdy7j4+PjIG9+bAbNI7g1DcYXDSkmQT6wwBYUbs04R3Yc5DcZG+YkgbvwmyEn5B2hxLiJQhulaipmToMVqSInw5woSPA7katV5gmxFkuwSChhgusumEUhtaaPqLiJFOyBxmg9otFU3cQRrTYdFFrDnMAShISJkMKu/khVvesyYx1ePfu9TmXKFtU6gay008ku1QU4xebkZArSICUiW7aje/JgjJipTrZsh5xrNOZSRRor/yuHDgPG4SA5EBhl3ZTF4p/6qbN4BROJW/qWFhqTMlFssBGmJaS/vd6sdgcQ3VehKIBw3gN7DhZvYUVOhuQdGR0MwMNA8dMwFbV51on9bcv1q46yqBXukm7iqFqF1gKbJ6gsHSBzWtjVuU5dNsy9YxUujoZpkW1xlAdhV35NTWsMxqA1Qehv1LSCU8cWaE/B4HBEJSQTDkE0VRewQn2D2vijgQsT5JF0xqL2RktyHc+S3tu+4Leglll1jkzRN37YLNYjShZugszKwmgdZ2fnqKxgRWi7Kfc6YdwZh73P4+iy93vnfNwNY0IJKp6lQtmQMTRmE44pOGkjyIAJu9oWCOe9lOPMx2PL9OnxzERU4MKL4/Hdx/a4/VsZWqGRD8S32kMuzGJnKWGC0mzq6W6HlQi1szJ1MH4WC0osCFWEa7QevQjw+Dy+/sdA5wSnU2SWnJDe5XgQfTn7fH1xRihZ4KquCZAON13+eS5+OG7VXvbOrvuXvX+RoyO6cXKY16emLvYXFp5QxoJi6JXNfouRPgXzU2vvzXA/N02Pe/mi8jtYX4sGsalJGt6a0Nk5/eomRStC0wUlpmgs/YIyieag7ZoKSIK8n0r0X0bGuAT56crDy7RQTGQgQ8ZSp+y2XboEvULIdnokSUDBDHmcSsEElvB3aatQq52kAOdXaVybKCW8TsUtGmRHSaFww9t8mDzK5Ly7a/UJOF4rv2P6MZfeMLYvNrV14z76/aXr2cb+QyozDT4jRWfchOS12Xvr+t9vLf7vzX7kR+V8LJGWrPrrrDitV6nnPDjED8mcDyxY9KOM+a7oH5L3vf8eyUWsyjCt17SPJnWaYX1q718jGjlj0+RXco9dZXaqDe7tF+t0KThqP+LRYuwbWJgJNfM6Uaq4qH9/FH8E1/RD0Dr6VP0qfF9OhA3pJ7NGNaY1lq1m8LV8vmk1i6mtykG8svNUvW8FzWbQPvrTCNHQTlmRYNAv738B33lBIo0UAAA="
    },
    "Metadata": {
     "aws:cdk:path": "LaunchpadStack/CDKMetadata/Default"
